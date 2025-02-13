@@ -1,0 +1,15 @@
+.page {
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ flex-direction: column;
+ min-height: 100vh;
+ padding: 1rem;
+}
+
+.main {
+ flex: 1;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+}
