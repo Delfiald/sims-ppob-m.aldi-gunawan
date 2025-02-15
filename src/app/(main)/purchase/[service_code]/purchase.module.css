@@ -1,0 +1,75 @@
+.purchase {
+ justify-self: center;
+ max-width: 1100px;
+ width: 100%;
+ display: flex;
+ align-items: flex-start;
+ justify-content: center;
+ flex-direction: column;
+ gap: 1rem;
+}
+
+.purchase-header {
+ display: flex;
+ align-items: flex-start;
+ justify-content: center;
+ flex-direction: column;
+ gap: 1rem;
+}
+
+.purchase-header .purchase-information {
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ gap: 1rem;
+}
+
+.purchase-header .purchase-information .purchase-icon {
+ width: 2rem;
+ height: 2rem;
+ overflow: hidden;
+ box-shadow: 0px 0px 2px #ccc;
+}
+
+.purchase-header .purchase-information .purchase-icon img {
+ width: 100%;
+ height: 100%;
+ object-fit: contain;
+}
+
+.purchase-header .purchase-information .purchase-name {
+ font-weight: bold;
+}
+
+.purchase-wrapper {
+ width: 100%;
+ display: flex;
+ flex-direction: column;
+ gap: 1rem;
+}
+
+.purchase-wrapper .input-wrapper {
+ border: 1px solid #ccc;
+ background: #fff;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ padding: 1rem;
+ gap: 1rem;
+ border-radius: 7px;
+}
+
+.purchase-wrapper .input-wrapper input {
+ width: 100%;
+ cursor: default;
+}
+
+.purchase-wrapper button {
+ width: 100%;
+ padding: 0.75rem;
+ border: 2px solid #f13b2f;
+ border-radius: 5px;
+ font-weight: bold;
+ background: #f13b2f;
+ color: #fff;
+}

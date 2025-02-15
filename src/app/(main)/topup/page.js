@@ -34,7 +34,7 @@ export default function Topup() {
        onChange={(e) => handleChange(e.target.value)}
        onKeyDown={handleKeyDown}
        type="text"
-       value={amount.toLocaleString("id-ID") ?? ""}
+       value={amount ? amount.toLocaleString("id-ID") : ""}
       />
      </div>
      <button disabled={!amount}>Top Up</button>
