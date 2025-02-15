@@ -87,11 +87,13 @@
  font-weight: bold;
 }
 
+.profile-form .edit,
 .profile-form .submit {
  background: #f13b2f;
  color: #fff;
 }
 
-.profile-form .logout {
+.profile-form .logout,
+.profile-form .cancel {
  color: #f13b2f;
 }
