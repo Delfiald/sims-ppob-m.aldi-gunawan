@@ -31,7 +31,7 @@ export default function Login() {
      </div>
     </div>
     <div className={styles["login-form"]}>
-     <div className={`${styles["input"]} ${styles.email}`}>
+     <label htmlFor="email" className={`${styles["input"]} ${styles.email}`}>
       <div className={styles["input-wrapper"]}>
        <AtSign size={18} />
        <input
@@ -41,8 +41,11 @@ export default function Login() {
         placeholder="masukkan email anda"
        />
       </div>
-     </div>
-     <div className={`${styles["input"]} ${styles.password}`}>
+     </label>
+     <label
+      htmlFor="password"
+      className={`${styles["input"]} ${styles.password}`}
+     >
       <div className={styles["input-wrapper"]}>
        <Lock size={18} />
        <input
@@ -57,7 +60,7 @@ export default function Login() {
         <EyeClosed onClick={handleVisible} size={18} />
        )}
       </div>
-     </div>
+     </label>
     </div>
     <div className={styles["action-wrapper"]}>
      <button className={styles.submit}>Masuk</button>
