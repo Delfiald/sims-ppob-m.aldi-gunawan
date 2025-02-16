@@ -9,6 +9,7 @@ import { fetchBalance } from "@/redux/slices/balanceSlice";
 import { processTopup } from "@/redux/slices/topupSlice";
 import { useRouter } from "next/navigation";
 import Modal from "@/components/Modal/Modal";
+import Loading from "@/components/Loading/Loading";
 
 export default function Topup() {
  const dispatch = useDispatch();
@@ -48,6 +49,10 @@ export default function Topup() {
   dispatch({ type: "topup/resetTopup" });
   route.push("/");
  };
+
+ if (loading) {
+  return <Loading />;
+ }
 
  return (
   <section className={styles["top-up"]}>

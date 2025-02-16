@@ -10,6 +10,7 @@ import {
  fetchTransactions,
  resetTransactions,
 } from "@/redux/slices/transactionsSlice";
+import Loading from "@/components/Loading/Loading";
 
 export default function Transaction() {
  const dispatch = useDispatch();
@@ -56,7 +57,7 @@ export default function Transaction() {
  }, [dispatch, isFetched]);
 
  if (transactionsLoading && transactions.length === 0) {
-  return <p>Loading</p>;
+  return <Loading />;
  }
 
  return (

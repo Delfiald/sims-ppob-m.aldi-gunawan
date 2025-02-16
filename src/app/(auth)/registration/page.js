@@ -8,9 +8,12 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "@/redux/slices/registerSlice";
+import { useRouter } from "next/navigation";
+import Loading from "@/components/Loading/Loading";
 
 export default function Registration() {
  const dispatch = useDispatch();
+ const route = useRouter();
  const { loading, error } = useSelector((state) => state.register);
 
  const [formData, setFormData] = useState({
@@ -46,6 +49,7 @@ export default function Registration() {
   if (confirmPassword === formData.password) {
    setConfirmError(null);
    dispatch(registerUser(formData));
+   route.push("/login");
   } else {
    setConfirmError("password tidak sama");
   }
@@ -56,6 +60,10 @@ export default function Registration() {
    dispatch({ type: "register/resetError" });
   };
  }, [dispatch]);
+
+ if (loading) {
+  return <Loading />;
+ }
 
  return (
   <div className={styles.registration}>

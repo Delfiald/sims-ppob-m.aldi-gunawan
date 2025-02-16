@@ -1,6 +1,7 @@
 "use client";
 
 import styles from "@/app/account/account.module.css";
+import Loading from "@/components/Loading/Loading";
 import {
  fetchProfile,
  updateProfile,
@@ -77,7 +78,7 @@ export default function Account() {
  }, [error]);
 
  if (loading) {
-  return <p>loading...</p>;
+  return <Loading />;
  }
 
  return (
