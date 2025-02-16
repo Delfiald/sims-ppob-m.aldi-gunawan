@@ -3,9 +3,17 @@
 import { Banknote } from "lucide-react";
 import styles from "./topup.module.css";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchBalance } from "@/redux/slices/balanceSlice";
+import { processTopup } from "@/redux/slices/topupSlice";
+import { useRouter } from "next/navigation";
 
 export default function Topup() {
+ const dispatch = useDispatch();
+ const route = useRouter();
  const [amount, setAmount] = useState(null);
+
+ const { topup, loading, error } = useSelector((state) => state.topup);
 
  const handleChange = (value) => {
   setAmount(value);
@@ -18,6 +26,23 @@ export default function Topup() {
   ) {
    e.preventDefault();
   }
+ };
+
+ const handlePurchase = async () => {
+  const result = await dispatch(
+   processTopup({
+    top_up_amount: amount,
+   })
+  );
+
+  if (processTopup.fulfilled.match(result)) {
+   dispatch(fetchBalance());
+  }
+ };
+
+ const handleBack = () => {
+  dispatch({ type: "topup/resetTopup" });
+  route.push("/");
  };
 
  return (
@@ -37,7 +62,9 @@ export default function Topup() {
        value={amount ? amount.toLocaleString("id-ID") : ""}
       />
      </div>
-     <button disabled={!amount}>Top Up</button>
+     <button onClick={handlePurchase} disabled={!amount}>
+      Top Up
+     </button>
     </div>
     <div className={styles["top-up-amount"]}>
      <div onClick={() => handleChange(10000)}>Rp10.000</div>
@@ -48,6 +75,14 @@ export default function Topup() {
      <div onClick={() => handleChange(500000)}>Rp500.000</div>
     </div>
    </div>
+   {topup && (
+    <div className={styles.modal}>
+     <div className="message">{topup}</div>
+     <button onClick={handleBack} className={styles.back}>
+      Kembali ke Beranda
+     </button>
+    </div>
+   )}
   </section>
  );
 }

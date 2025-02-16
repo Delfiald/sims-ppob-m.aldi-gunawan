@@ -1,13 +1,19 @@
+import Cookies from "js-cookie";
+
 const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit");
 
 export const fetchBanners = createAsyncThunk(
  "banners/fetchBanners",
- async () => {
+ async (_, { getState }) => {
+  let token = getState().login.token;
+  if (!token) {
+   token = Cookies.get("authToken");
+  }
   const response = await fetch(
    "https://take-home-test-api.nutech-integrasi.com/banner",
    {
     headers: {
-     Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAbnV0ZWNoLWludGVncmFzaS5jb20iLCJtZW1iZXJDb2RlIjoiTExLUjZKTDEiLCJpYXQiOjE3Mzk2MDk4OTAsImV4cCI6MTczOTY1MzA5MH0.VBxuPx4c4rnH3PNM_prMfOzR54tDoJYZt4m4BEsBwlI`,
+     Authorization: `Bearer ${token}`,
     },
    }
   );

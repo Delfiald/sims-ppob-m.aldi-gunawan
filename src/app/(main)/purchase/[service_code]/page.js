@@ -5,12 +5,15 @@ import styles from "./purchase.module.css";
 
 import { Banknote } from "lucide-react";
 import Image from "next/image";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { processTransaction } from "@/redux/slices/transactionsSlice";
+import { fetchBalance } from "@/redux/slices/balanceSlice";
 
 export default function Purchase() {
  const dispatch = useDispatch();
+ const route = useRouter();
  const params = useParams();
  const { service_code } = params;
 
@@ -20,6 +23,10 @@ export default function Purchase() {
   error: servicesError,
  } = useSelector((state) => state.services);
 
+ const { transaction, loading, error } = useSelector(
+  (state) => state.transactions
+ );
+
  const service = services.find((s) => s.service_code === service_code);
 
  useEffect(() => {
@@ -27,6 +34,23 @@ export default function Purchase() {
    dispatch(fetchServices());
   }
  }, [services.length, dispatch]);
+
+ const handlePurchase = async () => {
+  const result = await dispatch(
+   processTransaction({
+    service_code: service_code,
+   })
+  );
+
+  if (processTransaction.fulfilled.match(result)) {
+   dispatch(fetchBalance());
+  }
+ };
+
+ const handleBack = () => {
+  dispatch({ type: "transactions/resetTransaction" });
+  route.push("/");
+ };
 
  if (servicesLoading) {
   return <p className={styles.loading}>Loading...</p>;
@@ -61,7 +85,15 @@ export default function Purchase() {
       readOnly
      />
     </div>
-    <button>Bayar</button>
+    <button onClick={handlePurchase}>Bayar</button>
+    {transaction && (
+     <div className={styles.modal}>
+      <div className="message">{transaction}</div>
+      <button onClick={handleBack} className={styles.back}>
+       Kembali ke Beranda
+      </button>
+     </div>
+    )}
    </div>
   </section>
  );

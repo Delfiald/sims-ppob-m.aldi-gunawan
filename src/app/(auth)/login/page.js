@@ -5,14 +5,41 @@ import styles from "./login.module.css";
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "@/redux/slices/loginSlice";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
+ const dispatch = useDispatch();
+ const router = useRouter();
+ const { token, loading, error } = useSelector((state) => state.login);
+
+ const [formData, setFormData] = useState({
+  email: "",
+  password: "",
+ });
+
+ const handleChange = (e) => {
+  setFormData({ ...formData, [e.target.name]: e.target.value });
+ };
+
+ const handleLogin = () => {
+  dispatch({ type: "login/resetError" });
+  dispatch(loginUser(formData));
+ };
+
  const [visible, setVisible] = useState(false);
 
  const handleVisible = () => {
   setVisible(!visible);
  };
+
+ useEffect(() => {
+  if (token) {
+   router.replace("/");
+  }
+ }, [router, token]);
  return (
   <div className={styles.login}>
    <div className={styles["login-wrapper"]}>
@@ -31,25 +58,36 @@ export default function Login() {
      </div>
     </div>
     <div className={styles["login-form"]}>
-     <div className={`${styles["input"]} ${styles.email}`}>
-      <div className={styles["input-wrapper"]}>
+     <label htmlFor="email" className={`${styles["input"]} ${styles.email}`}>
+      <div
+       className={`${styles["input-wrapper"]} ${error.email && styles.error}`}
+      >
        <AtSign size={18} />
        <input
         type="email"
         name="email"
         id="email"
         placeholder="masukkan email anda"
+        onChange={handleChange}
        />
       </div>
-     </div>
-     <div className={`${styles["input"]} ${styles.password}`}>
-      <div className={styles["input-wrapper"]}>
+     </label>
+     <label
+      htmlFor="password"
+      className={`${styles["input"]} ${styles.password}`}
+     >
+      <div
+       className={`${styles["input-wrapper"]} ${
+        error.password && styles.error
+       }`}
+      >
        <Lock size={18} />
        <input
         type={visible ? "text" : "password"}
         name="password"
         id="password"
         placeholder="masukkan password anda"
+        onChange={handleChange}
        />
        {visible ? (
         <Eye onClick={handleVisible} size={18} />
@@ -57,10 +95,12 @@ export default function Login() {
         <EyeClosed onClick={handleVisible} size={18} />
        )}
       </div>
-     </div>
+     </label>
     </div>
     <div className={styles["action-wrapper"]}>
-     <button className={styles.submit}>Masuk</button>
+     <button onClick={handleLogin} className={styles.submit}>
+      Masuk
+     </button>
      <div>
       <span>belum punya akun? registrasi </span>
       <Link href={"/registration"} className={styles.registration}>
@@ -68,14 +108,20 @@ export default function Login() {
       </Link>
      </div>
     </div>
-    {
+    {Object.keys(error).length > 0 && (
      <div className={styles.feedback}>
-      <p>password yang anda masukkan salah</p>
-      <div className={styles.close}>
+      <p>
+       {["email", "password", "general"].find((key) => error[key]) &&
+        error[["email", "password", "general"].find((key) => error[key])]}
+      </p>
+      <div
+       onClick={() => dispatch({ type: "login/resetError" })}
+       className={styles.close}
+      >
        <X size={16} />
       </div>
      </div>
-    }
+    )}
    </div>
   </div>
  );

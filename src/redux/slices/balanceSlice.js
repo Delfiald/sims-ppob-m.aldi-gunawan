@@ -1,17 +1,15 @@
-import Cookies from "js-cookie";
-
 const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit");
 
-export const fetchServices = createAsyncThunk(
- "services/fetchServices",
+export const fetchBalance = createAsyncThunk(
+ "balance/fetchBalance",
  async (_, { getState }) => {
   let token = getState().login.token;
+
   if (!token) {
    token = Cookies.get("authToken");
   }
-
   const response = await fetch(
-   "https://take-home-test-api.nutech-integrasi.com/services",
+   `https://take-home-test-api.nutech-integrasi.com/balance`,
    {
     headers: {
      Authorization: `Bearer ${token}`,
@@ -24,39 +22,33 @@ export const fetchServices = createAsyncThunk(
   }
 
   const data = await response.json();
-
-  return data.data;
+  return data;
  }
 );
 
-const servicesSlice = createSlice({
- name: "banners",
+const balanceSlice = createSlice({
+ name: "balance",
  initialState: {
-  services: [],
-  loading: true,
+  balance: 0,
+  loading: false,
   error: null,
  },
- reducers: {
-  setServices: (state, action) => {
-   state.services = action.payload;
-  },
- },
+ reducers: {},
  extraReducers: (builder) => {
   builder
-   .addCase(fetchServices.pending, (state) => {
+   .addCase(fetchBalance.pending, (state) => {
     state.loading = true;
     state.error = null;
    })
-   .addCase(fetchServices.fulfilled, (state, action) => {
+   .addCase(fetchBalance.fulfilled, (state, action) => {
     state.loading = false;
-    state.services = action.payload;
+    state.balance = action.payload.data;
    })
-   .addCase(fetchServices.rejected, (state, action) => {
+   .addCase(fetchBalance.rejected, (state, action) => {
     state.loading = false;
     state.error = action.error.message;
    });
  },
 });
 
-export const { setServices } = servicesSlice.actions;
-export default servicesSlice.reducer;
+export default balanceSlice.reducer;
