@@ -6,6 +6,7 @@ import { fetchProfile } from "@/redux/slices/profileSlice";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Loading from "../Loading/Loading";
 
 function UserSection() {
  const dispatch = useDispatch();
@@ -27,8 +28,8 @@ function UserSection() {
   dispatch(fetchBalance());
  }, [dispatch]);
 
- if (loading) {
-  return <p>loading...</p>;
+ if (loading || balanceLoading) {
+  return <Loading />;
  }
 
  return (

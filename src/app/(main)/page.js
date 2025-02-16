@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchBanners } from "@/redux/slices/bannersSlice";
 import { fetchServices } from "@/redux/slices/servicesSlice";
+import Loading from "@/components/Loading/Loading";
 
 export default function Home() {
  const dispatch = useDispatch();
@@ -44,8 +45,8 @@ export default function Home() {
   }
  }, [banners.length, dispatch, services.length]);
 
- if (servicesLoading) {
-  return <p className={styles.loading}>Loading...</p>;
+ if (servicesLoading || bannersLoading) {
+  return <Loading />;
  }
 
  return (

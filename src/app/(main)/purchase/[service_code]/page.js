@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { processTransaction } from "@/redux/slices/transactionsSlice";
 import { fetchBalance } from "@/redux/slices/balanceSlice";
 import Modal from "@/components/Modal/Modal";
+import Loading from "@/components/Loading/Loading";
 
 export default function Purchase() {
  const dispatch = useDispatch();
@@ -56,7 +57,7 @@ export default function Purchase() {
  };
 
  if (servicesLoading) {
-  return <p className={styles.loading}>Loading...</p>;
+  return <Loading />;
  }
 
  if (!service || servicesError) {
