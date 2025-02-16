@@ -23,3 +23,22 @@ a {
  color: inherit;
  text-decoration: none;
 }
+
+input {
+ border: none;
+ outline: none;
+ font-family: inherit;
+ width: 700px;
+}
+
+input:disabled {
+ background: transparent;
+ color: #555;
+}
+
+button {
+ border: none;
+ outline: none;
+ background: transparent;
+ cursor: pointer;
+}
