@@ -27,3 +27,23 @@ main.auth {
  height: 100%;
  object-fit: contain;
 }
+
+@media (max-width: 1100px) {
+ .auth-content {
+  flex: 100%;
+ }
+}
+
+@media (max-width: 600px) {
+ .auth-illustration {
+  display: none;
+ }
+}
+
+@media (max-height: 800px) {
+ main.auth,
+ .auth-content,
+ .auth-illustration {
+  overflow-y: auto;
+ }
+}

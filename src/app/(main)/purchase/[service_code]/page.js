@@ -56,7 +56,7 @@ export default function Purchase() {
   route.push("/");
  };
 
- if (servicesLoading) {
+ if (servicesLoading || loading) {
   return <Loading />;
  }
 

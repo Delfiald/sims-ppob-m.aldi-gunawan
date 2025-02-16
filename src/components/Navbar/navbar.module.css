@@ -48,3 +48,10 @@
 .header .nav-links > a.active {
  color: #f13b2f;
 }
+
+@media (max-width: 600px) {
+ .header nav {
+  flex-direction: column;
+  gap: 1rem;
+ }
+}

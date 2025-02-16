@@ -95,3 +95,17 @@
  color: #fff;
  cursor: pointer;
 }
+
+@media (max-width: 1100px) {
+ .user-section {
+  padding: 1rem;
+  grid-template-columns: repeat(2, 1fr);
+ }
+}
+
+@media (max-width: 600px) {
+ .user-profile,
+ .user-balance {
+  grid-column: 1 / -1;
+ }
+}

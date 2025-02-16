@@ -95,3 +95,9 @@
 .modal .modal-content .cancel {
  opacity: 0.5;
 }
+
+@media (max-width: 600px) {
+ .modal .modal-content {
+  width: 80vw;
+ }
+}
