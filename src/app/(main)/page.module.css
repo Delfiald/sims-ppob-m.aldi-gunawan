@@ -1,0 +1,87 @@
+.homepage {
+ justify-self: center;
+ max-width: 1100px;
+ width: 100%;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ flex-direction: column;
+ gap: 3rem;
+}
+
+.services {
+ width: 100%;
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(65px, 1fr));
+ justify-content: center;
+ align-items: stretch;
+ gap: 1.5rem;
+}
+
+.services .service {
+ display: flex;
+ align-items: center;
+ justify-content: flex-start;
+ flex-direction: column;
+ cursor: pointer;
+ gap: 0.5rem;
+}
+
+.services .service .service-image {
+ min-height: 65px;
+ width: 100%;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ box-shadow: 0px 0px 2px #ccc;
+ border-radius: 10px;
+ overflow: hidden;
+}
+
+.services .service .service-image img {
+ width: 100%;
+ height: 100%;
+ object-fit: contain;
+}
+
+.services .service .service-name {
+ font-size: 0.85rem;
+ text-align: center;
+}
+
+.banners {
+ width: 100%;
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: flex-start;
+ gap: 1rem;
+}
+
+.banners .banner-list {
+ display: flex;
+ justify-content: flex-start;
+ align-items: center;
+ gap: 2rem;
+ overflow-x: auto;
+ scrollbar-width: none;
+ padding: 1rem 0;
+ width: 100%;
+}
+
+.banners .banner-list .banner {
+ flex: 0 0 225px;
+}
+
+.banners .banner-list .banner-image {
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ overflow: hidden;
+}
+
+.banners .banner-list .banner-image img {
+ width: 100%;
+ height: 100%;
+ object-fit: contain;
+}

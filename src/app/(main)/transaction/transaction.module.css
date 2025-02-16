@@ -1,0 +1,68 @@
+.transactions {
+ justify-self: center;
+ max-width: 1100px;
+ width: 100%;
+ display: flex;
+ align-items: flex-start;
+ justify-content: center;
+ flex-direction: column;
+ gap: 1rem;
+ padding: 1rem 0;
+}
+
+.transactions .transaction-list {
+ width: inherit;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ flex-direction: column;
+ gap: 1rem;
+}
+
+.transactions .transaction-list .transaction {
+ width: 100%;
+ display: grid;
+ grid-template-columns: 1fr min-content;
+ border: 1px solid #ccc;
+ padding: 1rem;
+ border-radius: 5px;
+ gap: 0.5rem;
+}
+
+.transactions .transaction-list .transaction .amount {
+ display: flex;
+ align-items: center;
+ justify-content: flex-start;
+ font-weight: bold;
+ font-size: 1.25rem;
+}
+
+.transactions .transaction-list .transaction .amount.PAYMENT {
+ color: #ff5630;
+}
+
+.transactions .transaction-list .transaction .amount.TOPUP {
+ color: #52bd94;
+}
+
+.transactions .transaction-list .transaction .amount span {
+ margin-left: 1rem;
+}
+
+.transactions .transaction-list .transaction .description {
+ grid-column: 2 / -1;
+ white-space: nowrap;
+ font-size: small;
+}
+
+.transactions .transaction-list .transaction .created-on {
+ font-size: small;
+ opacity: 0.5;
+}
+
+button.show-more {
+ align-self: center;
+ color: #f13b2f;
+ font-weight: bold;
+ padding: 1rem;
+}
