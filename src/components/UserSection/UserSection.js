@@ -1,24 +1,42 @@
 "use client";
 
-import styles from "@/components/UserSection/userSection.module.css";
+import { fetchBalance } from "@/redux/slices/balanceSlice";
+import styles from "./userSection.module.css";
+import { fetchProfile } from "@/redux/slices/profileSlice";
 import Image from "next/image";
-import { useState } from "react";
-
-const balance = 10000;
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 function UserSection() {
+ const dispatch = useDispatch();
  const [visibility, setVisibility] = useState(false);
+
+ const { user, loading, error } = useSelector((state) => state.profile);
+ const {
+  balance,
+  loading: balanceLoading,
+  error: balanceError,
+ } = useSelector((state) => state.balance);
 
  const visibilityHandle = () => {
   setVisibility(!visibility);
  };
+
+ useEffect(() => {
+  dispatch(fetchProfile());
+  dispatch(fetchBalance());
+ }, [dispatch]);
+
+ if (loading) {
+  return <p>loading...</p>;
+ }
 
  return (
   <section className={styles["user-section"]}>
    <div className={styles["user-profile"]}>
     <div className={styles["profile-picture"]}>
      <Image
-      src={"/Profile Photo.png"}
+      src={user.profile_image}
       alt="profile-picture"
       width={70}
       height={70}
@@ -26,7 +44,7 @@ function UserSection() {
     </div>
     <div className={styles["user-name"]}>
      <p>Selamat datang,</p>
-     <h3>Kristanto Wibowo</h3>
+     <h3>{`${user.first_name} ${user.last_name}`}</h3>
     </div>
    </div>
    <div className={styles["user-balance"]}>
@@ -34,7 +52,7 @@ function UserSection() {
     <div className={styles.balance}>
      <span>Rp</span>
      {visibility ? (
-      balance.toLocaleString("id-ID")
+      balance.balance.toLocaleString("id-ID")
      ) : (
       <div className={styles["not-visible"]}>
        <span></span>

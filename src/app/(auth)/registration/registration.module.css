@@ -98,7 +98,8 @@
  opacity: 1;
 }
 
-.input .input-wrapper:has(input:not(:valid)) {
+.input .input-wrapper:has(input:not(:valid)),
+.input .input-wrapper.error {
  border-color: #f13b2f;
 }
 

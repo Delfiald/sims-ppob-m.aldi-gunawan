@@ -98,6 +98,16 @@
  opacity: 1;
 }
 
+.input .input-wrapper:has(input:not(:valid)),
+.input .input-wrapper.error {
+ border-color: #f13b2f;
+}
+
+.input .input-wrapper:has(input:not(:valid)) svg:first-child,
+.input .input-wrapper.error svg:first-child {
+ color: #f13b2f;
+}
+
 .input .input-wrapper svg:last-child {
  cursor: pointer;
 }

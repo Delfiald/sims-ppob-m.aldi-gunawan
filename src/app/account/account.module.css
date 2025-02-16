@@ -79,6 +79,20 @@
  border-radius: 7px;
 }
 
+.input .input-wrapper.error {
+ border-color: #f13b2f;
+}
+
+.input .input-wrapper.error svg:first-child {
+ color: #f13b2f;
+}
+
+.validation-info {
+ font-size: 0.7rem;
+ align-self: flex-end;
+ color: #f13b2f;
+}
+
 .profile-form button {
  width: 100%;
  padding: 0.75rem;
