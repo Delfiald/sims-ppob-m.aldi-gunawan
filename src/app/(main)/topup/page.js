@@ -1,17 +1,20 @@
 "use client";
 
-import { Banknote } from "lucide-react";
+import Image from "next/image";
+import { Banknote, Check, X } from "lucide-react";
 import styles from "./topup.module.css";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchBalance } from "@/redux/slices/balanceSlice";
 import { processTopup } from "@/redux/slices/topupSlice";
 import { useRouter } from "next/navigation";
+import Modal from "@/components/Modal/Modal";
 
 export default function Topup() {
  const dispatch = useDispatch();
  const route = useRouter();
  const [amount, setAmount] = useState(null);
+ const [modal, setModal] = useState(null);
 
  const { topup, loading, error } = useSelector((state) => state.topup);
 
@@ -41,6 +44,7 @@ export default function Topup() {
  };
 
  const handleBack = () => {
+  setModal(null);
   dispatch({ type: "topup/resetTopup" });
   route.push("/");
  };
@@ -57,12 +61,12 @@ export default function Topup() {
       <Banknote size={16} />
       <input
        onChange={(e) => handleChange(e.target.value)}
-       onKeyDown={handleKeyDown}
        type="text"
+       onKeyDown={handleKeyDown}
        value={amount ? amount.toLocaleString("id-ID") : ""}
       />
      </div>
-     <button onClick={handlePurchase} disabled={!amount}>
+     <button onClick={() => setModal("topup")} disabled={!amount}>
       Top Up
      </button>
     </div>
@@ -75,13 +79,15 @@ export default function Topup() {
      <div onClick={() => handleChange(500000)}>Rp500.000</div>
     </div>
    </div>
-   {topup && (
-    <div className={styles.modal}>
-     <div className="message">{topup}</div>
-     <button onClick={handleBack} className={styles.back}>
-      Kembali ke Beranda
-     </button>
-    </div>
+   {modal === "topup" && (
+    <Modal
+     type={topup ? "success" : error ? "error" : "confirm"}
+     message={topup ? "Top-up berhasil!" : error ? error : "Lanjutkan top-up?"}
+     amount={amount}
+     onConfirm={handlePurchase}
+     onClose={() => setModal(null)}
+     handleBack={handleBack}
+    />
    )}
   </section>
  );

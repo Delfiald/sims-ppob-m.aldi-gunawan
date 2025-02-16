@@ -3,19 +3,21 @@
 import { fetchServices } from "@/redux/slices/servicesSlice";
 import styles from "./purchase.module.css";
 
-import { Banknote } from "lucide-react";
+import { Banknote, Check, X } from "lucide-react";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { processTransaction } from "@/redux/slices/transactionsSlice";
 import { fetchBalance } from "@/redux/slices/balanceSlice";
+import Modal from "@/components/Modal/Modal";
 
 export default function Purchase() {
  const dispatch = useDispatch();
  const route = useRouter();
  const params = useParams();
  const { service_code } = params;
+ const [modal, setModal] = useState(null);
 
  const {
   services,
@@ -48,6 +50,7 @@ export default function Purchase() {
  };
 
  const handleBack = () => {
+  setModal(null);
   dispatch({ type: "transactions/resetTransaction" });
   route.push("/");
  };
@@ -85,16 +88,24 @@ export default function Purchase() {
       readOnly
      />
     </div>
-    <button onClick={handlePurchase}>Bayar</button>
-    {transaction && (
-     <div className={styles.modal}>
-      <div className="message">{transaction}</div>
-      <button onClick={handleBack} className={styles.back}>
-       Kembali ke Beranda
-      </button>
-     </div>
-    )}
+    <button onClick={() => setModal("transaction")}>Bayar</button>
    </div>
+   {modal === "transaction" && (
+    <Modal
+     type={transaction ? "success" : error ? "error" : "confirm"}
+     message={
+      transaction
+       ? transaction
+       : error
+       ? error
+       : `Beli ${service.service_name} senilai`
+     }
+     amount={service.service_tariff}
+     onConfirm={handlePurchase}
+     onClose={() => setModal(null)}
+     handleBack={handleBack}
+    />
+   )}
   </section>
  );
 }
