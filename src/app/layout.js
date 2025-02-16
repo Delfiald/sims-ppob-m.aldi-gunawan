@@ -3,6 +3,9 @@ import "./globals.css";
 
 export const metadata = {
  title: "SIMS PPOB - M.Aldi Gunawan",
+ icons: {
+  icon: "/Logo.png",
+ },
 };
 
 export default function RootLayout({ children }) {

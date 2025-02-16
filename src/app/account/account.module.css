@@ -111,3 +111,29 @@
 .profile-form .cancel {
  color: #f13b2f;
 }
+
+@media (max-width: 1100px) {
+ .input .input-wrapper input {
+  width: 500px;
+ }
+}
+
+@media (max-width: 600px) {
+ .account {
+  padding: 1rem 0;
+  height: 100%;
+ }
+ .profile-form {
+  width: 100%;
+ }
+
+ .input .input-wrapper input {
+  width: 300px;
+ }
+}
+
+@media (max-width: 360px) {
+ .input .input-wrapper input {
+  width: 200px;
+ }
+}
