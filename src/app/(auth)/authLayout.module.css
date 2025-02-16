@@ -1,0 +1,29 @@
+main.auth {
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ width: 100vw;
+ height: 100vh;
+ overflow: hidden;
+}
+
+.auth-content {
+ flex: 80%;
+ overflow: hidden;
+}
+
+.auth-illustration {
+ background: #fff1f0;
+ flex: 100%;
+ height: 100%;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ overflow: hidden;
+}
+
+.auth-illustration img {
+ width: 100%;
+ height: 100%;
+ object-fit: contain;
+}

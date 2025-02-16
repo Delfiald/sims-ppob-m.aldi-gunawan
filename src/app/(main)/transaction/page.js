@@ -1,38 +1,28 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./transaction.module.css";
 import { Minus, Plus } from "lucide-react";
 import { format } from "date-fns-tz";
 import { id } from "date-fns/locale";
+import { useDispatch, useSelector } from "react-redux";
+import {
+ fetchTransactions,
+ resetTransactions,
+} from "@/redux/slices/transactionsSlice";
 
 export default function Transaction() {
- const [transactions, setTransactions] = useState([
-  {
-   invoice_number: "INV17082023-001",
-   transaction_type: "TOPUP",
-   description: "Top Up balance",
-   total_amount: 100000,
-   created_on: "2023-08-17T10:10:10.000Z",
-  },
-  {
-   invoice_number: "INV17082023-002",
-   transaction_type: "PAYMENT",
-   description: "PLN Pascabayar",
-   total_amount: 10000,
-   created_on: "2023-08-17T11:10:10.000Z",
-  },
-  {
-   invoice_number: "INV17082023-003",
-   transaction_type: "PAYMENT",
-   description: "Pulsa Indosat",
-   total_amount: 40000,
-   created_on: "2023-08-17T12:10:10.000Z",
-  },
- ]);
+ const dispatch = useDispatch();
+ const {
+  transactions,
+  isFetched,
+  loading: transactionsLoading,
+  error: transactionsError,
+ } = useSelector((state) => state.transactions);
 
  const [offset, setOffset] = useState(0);
  const limit = 3;
+ const [hasMore, setHasMore] = useState(true);
 
  const formatDate = (dateString) => {
   const date = new Date(dateString);
@@ -42,9 +32,32 @@ export default function Transaction() {
   });
  };
 
- const handleShowMore = () => {
-  setOffset((prev) => prev + limit);
+ const handleShowMore = async () => {
+  const newOffset = offset + limit;
+  const result = await dispatch(fetchTransactions(newOffset)).unwrap();
+
+  if (result.length === 0) {
+   setHasMore(false);
+  } else {
+   setOffset(newOffset);
+  }
  };
+
+ useEffect(() => {
+  if (!isFetched) {
+   dispatch(fetchTransactions(0));
+  }
+
+  return () => {
+   if (isFetched) {
+    dispatch(resetTransactions());
+   }
+  };
+ }, [dispatch, isFetched]);
+
+ if (transactionsLoading && transactions.length === 0) {
+  return <p>Loading</p>;
+ }
 
  return (
   <section className={styles.transactions}>
@@ -70,7 +83,7 @@ export default function Transaction() {
      </div>
     ))}
    </div>
-   {offset + limit < transactions.length && (
+   {!transactionsLoading && hasMore && (
     <button onClick={handleShowMore} className={styles["show-more"]}>
      Show more
     </button>
